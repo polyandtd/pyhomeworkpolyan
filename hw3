@@ -25,6 +25,38 @@ for i in range(5):
 print(cnt)
 # OUT: 430
 
+# Задание 3.
+# Напишите функцию, которая возвращает название валюты (поле ‘Name’) с максимальным значением курса с помощью сервиса https://www.cbr-xml-daily.ru/daily_json.js
+import json
+import pandas as pd
+a = pd.read_json('https://www.cbr-xml-daily.ru/daily_json.js')
+def max_rate_show(data):
+    cnt = 0
+    keys_list = data['Valute'].keys()
+    for key in keys_list:
+        nom = data['Valute'][key]['Nominal']
+        b = data['Valute'][key]['Value'] / nom
+        if b > cnt:
+            cnt = b
+    for key in keys_list:
+        b = data['Valute'][key]['Value']
+        if cnt == b:
+            return data['Valute'][key]['Name'], data['Valute'][key]
+            
+            
+max_rate_show(a)
+
+"""
+# OUT: ('СДР (специальные права заимствования)',
+ {'ID': 'R01589',
+  'NumCode': '960',
+  'CharCode': 'XDR',
+  'Nominal': 1,
+  'Name': 'СДР (специальные права заимствования)',
+  'Value': 87.2543,
+  'Previous': 86.9549})
+  """
+
 # Задание 5.
 # Напишите функцию, возвращающую сумму первых n чисел Фибоначчи
 def fib(k):
